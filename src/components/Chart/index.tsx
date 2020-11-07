@@ -15,10 +15,37 @@ export const Chart: React.FC<ChartProps> = (props) => {
     ISeriesApi<"Candlestick">
   >;
 
-  const [prices, setPrices] = useState([]);
+  const [prices, setPrices] = useState<any[]>([]);
   const [chartLoaded, setChartLoaded] = useState(false);
 
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      cryptoHttp
+      .get(`histominute?fsym=${coin}&tsym=BRL&limit=1`)
+      .then((response) => {
+        setPrices((prevState) => {
+          const price = response.data.Data[1];
+          const newPrice = {
+            time: price.time,
+            low: price.low,
+            high: price.high,
+            open: price.open,
+            close: price.close,
+            volume: price.volumefrom,
+          };
+          candleSeriesRef.current.update(newPrice);
+          return [...prevState, newPrice]
+        });
+      });
+    }, 60000);
+    return () => clearInterval(interval)
+  }, [coin]);
+
+
   useEffect(() => {
+    if (!chartLoaded) {
+      return;
+    }
     cryptoHttp
       .get(`histoday?fsym=${coin}&tsym=BRL&limit=300`)
       .then((response) => {
@@ -32,7 +59,7 @@ export const Chart: React.FC<ChartProps> = (props) => {
         }));
         setPrices(prices);
       });
-  }, [coin]);
+  }, [coin, chartLoaded]);
 
   useEffect(() => {
     if (candleSeriesRef.current) {
@@ -41,8 +68,8 @@ export const Chart: React.FC<ChartProps> = (props) => {
   }, [prices]);
 
   useEffect(() => {
-    setPrices([])
-  },[coin])
+    setPrices([]);
+  }, [coin]);
 
   useEffect(() => {
     const chart = createChart(containerRef.current, {
@@ -81,7 +108,7 @@ export const Chart: React.FC<ChartProps> = (props) => {
       wickUpColor: "#838ca1",
     });
     setChartLoaded(true);
-  }, [coin, chartLoaded]);
+  }, []);
 
   return (
     <div className="Chart" ref={containerRef}>

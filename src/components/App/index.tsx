@@ -4,7 +4,7 @@ import { Header } from "../Header";
 import "./index.css";
 
 function App() {
-  const [coinSelected, setCoinSelected] = useState("");
+  const [coinSelected, setCoinSelected] = useState("BTC");
   return (
     <div className="App">
       <Header onSelected={(coin) => setCoinSelected(coin)} />

@@ -46,8 +46,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
   return (
     <div className="Header">
-      {Object.keys(prices).map((coin) => (
-        <div onClick={() => onSelected(coin)}>
+      {Object.keys(prices).map((coin, index) => (
+        <div key={index} onClick={() => onSelected(coin)}>
           <Coin
             coin={coin}
             oldPrice={prices[coin].oldPrice}
