@@ -1,3 +1,5 @@
+<img alt="CryptoView" src="assets/result.png" />
+
 ## :rocket: Technologies
 
 This project was built using the following technologies:
