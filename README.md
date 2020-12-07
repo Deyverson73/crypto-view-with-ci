@@ -7,7 +7,6 @@ This project was built using the following technologies:
 - [Lightweight-Charts](https://br.tradingview.com/lightweight-charts/)
 - [React](https://reactjs.org)
 - [Typescript](https://www.typescriptlang.org/)
-- [Styled-Components](https://styled-components.com/)
 
 ## 💻 Project
 
